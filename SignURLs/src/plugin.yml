@@ -1,0 +1,27 @@
+name: SignURLs
+main: net.willhastings.SignURLs.SignURLs
+version: 1.0.2
+author: bill1993
+softdepend: [Vault]
+
+commands:
+  signurls:
+    description: SignURLs command to ADD, REMOVE, and CHANGE linked links
+    
+permissions:
+  signurls.command:
+    description: Access to the SignURLs command.
+  signurls.command.*:
+    description: Access to the SignURLs command, and all sub-commands.
+  signurls.command.add:
+    description: Access to the ADD sub-command.
+  signurls.command.remove:
+    description: Access to the REMOVE sub-command.
+  signurls.command.change:
+    description: Access to the CHANGE sub-command.
+  signurls.command.admin:
+    description: Access to the ADMIN sub-command.
+  signurls.use:
+    description: Allows a user to use SignURL signs.
+  signurls.place:
+    description: Allows a user to place a SignURLs Sign.
