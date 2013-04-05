@@ -4,14 +4,12 @@ import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
-import org.bukkit.block.Furnace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
@@ -106,15 +104,6 @@ public class SignLisener implements Listener
 					}
 				}
 			}
-		}
-	}
-	
-	
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void ExpBlockEvent(BlockExpEvent event)
-	{
-		if(event.getBlock().getState() instanceof Furnace) {
-			event.setExpToDrop(0);
 		}
 	}
 }
