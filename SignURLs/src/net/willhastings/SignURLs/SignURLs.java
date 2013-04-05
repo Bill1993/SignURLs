@@ -1,13 +1,6 @@
 package net.willhastings.SignURLs;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
@@ -26,11 +19,9 @@ public class SignURLs extends JavaPlugin
 	public static final String PREFIX = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "SignURLs" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE;
 	public static SignLisener signlisener = null;
 	
-	public static final String driver = "org.sqlite.JDBC";
-	public static Connection con;
-	public static Driver d;
-	
 	public static Permission permission = null;
+	
+	private static SQLite db;
 	
 	public void onEnable()
 	{
@@ -42,23 +33,12 @@ public class SignURLs extends JavaPlugin
 		
 		getCommand("signurls").setExecutor(new MainCommand());
 		
-		try 
-		{
-			loadSQLDriver();
-		} catch (Exception e) {
-			System.out.println("Error loading database driver: " + e.toString());
-		}
+		db = new SQLite(this.getDataFolder().getPath(), "links");
 		
 		try {
-			startSQLConnection();
-		} catch (Exception e) {
-			System.out.println("Error creating connection: " + e.toString());
-		}
-		
-		try {
-			 Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
+			 db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
 			 
-			 res = QueryRes("SELECT * FROM `database`");
+			 res = db.QueryRes("SELECT * FROM `database`");
 
 			 String lineText, URL;
 			 while(res.next())
@@ -87,38 +67,7 @@ public class SignURLs extends JavaPlugin
 
 	public void onDisable()
 	{
-		try {
-			con.close();
-		} catch (Exception e) {
-			System.out.println("Error while closing connection: " + e.toString());
-		}
-	}
-	
-	private static Boolean Query(String sql) throws SQLException 
-	{
-		Statement stmt = con.createStatement();
-		return stmt.execute(sql);
-	}
 
-	private static ResultSet QueryRes(String sql) throws SQLException 
-	{
-		Statement stmt = con.createStatement();
-		ResultSet temp = stmt.executeQuery(sql);
-		return temp;
-	}
-	
-	private void startSQLConnection() throws SQLException, IOException 
-	{
-		File dirCheck = new File(this.getDataFolder().getPath());
-		if(!dirCheck.exists()) dirCheck.mkdirs();
-		String url = "jdbc:sqlite:" + this.getDataFolder().getPath() + File.separator + "links.sqlite";
-		con = DriverManager.getConnection(url);
-	}
-	
-	private void loadSQLDriver() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException 
-	{
-		d = (Driver)Class.forName(driver).newInstance();
-		DriverManager.registerDriver(d);
 	}
 	
 	public static SignURLs getPlugin()
@@ -130,7 +79,7 @@ public class SignURLs extends JavaPlugin
 	{
 		try 
 		{
-			Query("INSERT INTO `database` (signurl, url) VALUES ('" + lineText + "', '" + uRL + "')");
+			db.Query("INSERT INTO `database` (signurl, url) VALUES ('" + lineText + "', '" + uRL + "')");
 		} 
 		catch (Exception e) 
 		{
@@ -144,7 +93,7 @@ public class SignURLs extends JavaPlugin
 	{
 		try 
 		{
-			Query("UPDATE `database` SET url='" + uRL + "' WHERE signurl='" + lineText + "'");
+			db.Query("UPDATE `database` SET url='" + uRL + "' WHERE signurl='" + lineText + "'");
 		} 
 		catch (Exception e) 
 		{
@@ -158,7 +107,7 @@ public class SignURLs extends JavaPlugin
 	{
 		try 
 		{
-			Query("DELETE FROM `database` WHERE signurl='" + lineText + "'");
+			db.Query("DELETE FROM `database` WHERE signurl='" + lineText + "'");
 		} 
 		catch (Exception e) 
 		{
@@ -172,9 +121,9 @@ public class SignURLs extends JavaPlugin
 	{
 		ResultSet res;
 		try {
-			 Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
+			db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
 			 
-			 res = QueryRes("SELECT * FROM `database`");
+			 res = db.QueryRes("SELECT * FROM `database`");
 
 			 String lineText, URL;
 			 while(res.next())
