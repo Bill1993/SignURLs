@@ -26,7 +26,7 @@ public class SignLisener implements Listener
 		log = logger;
 	}
 	
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onSignChange(SignChangeEvent event)
 	{	
 		Block block = event.getBlock();

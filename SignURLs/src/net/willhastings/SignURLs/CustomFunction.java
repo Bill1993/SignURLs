@@ -124,4 +124,11 @@ public class CustomFunction
 		return SignURLs.loadlinkDB();
 	}
 
+	public static boolean purgeDB() 
+	{
+		link.clear();
+		list.clear();	
+		return SignURLs.purgeDB();
+	}
+
 }

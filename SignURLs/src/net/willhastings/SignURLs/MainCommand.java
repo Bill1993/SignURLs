@@ -23,9 +23,12 @@ public class MainCommand implements CommandExecutor {
 		
 		if(args.length < 1)
 		{
-			sender.sendMessage(SignURLs.PREFIX + " Invalid Sub-Command, Valid Sub-Commands are " + ChatColor.RED + "ADD" + ChatColor.WHITE + ", " + ChatColor.RED + "REMOVE" + ChatColor.WHITE + ", " 
-					+ ChatColor.RED +"CHANGE" + ChatColor.WHITE + ChatColor.RED +"LIST" + ChatColor.WHITE +", and " + ChatColor.RED +"ADMIN");
-			
+			sender.sendMessage(SignURLs.PREFIX + ChatColor.RED + " Invalid Sub-Command, Valid Sub-Commands are: ");
+			sender.sendMessage(SignURLs.PREFIX + "ADD\n" + ChatColor.YELLOW + " - Will link a phrase/word to a link.");
+			sender.sendMessage(SignURLs.PREFIX + "REMOVE\n" + ChatColor.YELLOW + " - Will remove a phrase/word and link.");
+			sender.sendMessage(SignURLs.PREFIX + "CHANGE\n" + ChatColor.YELLOW + " - Will modify the link, linked to a phrase/word.");
+			sender.sendMessage(SignURLs.PREFIX + "LIST\n" + ChatColor.YELLOW + " - Will list the phrases/words and to whom they are linked.");
+			sender.sendMessage(SignURLs.PREFIX + "ADMIN\n" + ChatColor.RED + " - SignURLs administration.");
 			return true;
 		}
 		
@@ -42,7 +45,7 @@ public class MainCommand implements CommandExecutor {
 					
 					if(args.length < 3)
 					{
-						sender.sendMessage(SignURLs.PREFIX + " Invalid Command Arguments: /SignUrls ADD {SignText} {URL}");
+						sender.sendMessage(SignURLs.PREFIX + " Invalid Command Arguments: /SignUrls ADD [SignText] [URL]");
 					}
 					else
 					{
@@ -56,7 +59,7 @@ public class MainCommand implements CommandExecutor {
 							{
 								sender.sendMessage(SignURLs.PREFIX + " That text is already linked to:");
 								sender.sendMessage(SignURLs.PREFIX + CustomFunction.fetchLink(args[1]));
-								sender.sendMessage(SignURLs.PREFIX + " To change the pointer use /SignURLs CHANGE {SignText} {New URL}");
+								sender.sendMessage(SignURLs.PREFIX + " To change the pointer use /SignURLs CHANGE [SignText] [New URL]");
 							}
 							else
 							{
@@ -76,7 +79,7 @@ public class MainCommand implements CommandExecutor {
 					
 					if(args.length < 2)
 					{
-						sender.sendMessage(SignURLs.PREFIX + " Invalid Command Arguments: /SignUrls REMOVE {SignText}");
+						sender.sendMessage(SignURLs.PREFIX + " Invalid Command Arguments: /SignUrls REMOVE [SignText]");
 					}
 					else
 					{
@@ -107,7 +110,7 @@ public class MainCommand implements CommandExecutor {
 					
 					if(args.length < 3)
 					{
-						sender.sendMessage(SignURLs.PREFIX + " Invalid Command Arguments: /SignUrls CHANGE {SignText} {NEW URL}");
+						sender.sendMessage(SignURLs.PREFIX + " Invalid Command Arguments: /SignUrls CHANGE [SignText] [NEW URL]");
 					}
 					else
 					{
@@ -176,12 +179,19 @@ public class MainCommand implements CommandExecutor {
 					
 					if(args.length < 3)
 					{
-						sender.sendMessage(SignURLs.PREFIX + "Invalid sub command usuage! /signurls ADMIN RELOAD DATABASE");
+						sender.sendMessage(SignURLs.PREFIX + ChatColor.RED + "Invalid sub command usuage!");
+						sender.sendMessage(SignURLs.PREFIX + "/signurls ADMIN DATABASE RELOAD\n" + ChatColor.YELLOW + " - Will reload SQLite DB!!!");
+						sender.sendMessage(SignURLs.PREFIX + "/signurls ADMIN DATABASE PURGE\n" + ChatColor.RED + " - Will delete everything from the SQLite DB!!!!");
 					}
-					else if(args[1].equalsIgnoreCase("reload") && args[2].equalsIgnoreCase("database"))
+					else if(args[1].equalsIgnoreCase("DATABASE") && args[2].equalsIgnoreCase("RELOAD"))
 					{
 						if(CustomFunction.reloadDB()) sender.sendMessage(SignURLs.PREFIX + "Link DB has been Reloaded!");
 							else sender.sendMessage(SignURLs.PREFIX + "LinkDB FAILED to Reload!");
+					}
+					else if(args[1].equalsIgnoreCase("DATABASE") && args[2].equalsIgnoreCase("PURGE"))
+					{
+						if(CustomFunction.purgeDB()) sender.sendMessage(SignURLs.PREFIX + "Link DB has been purged!");
+							else sender.sendMessage(SignURLs.PREFIX + "LinkDB FAILED to purge!");
 					}
 				}
 			}

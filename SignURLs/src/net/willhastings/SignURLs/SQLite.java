@@ -5,15 +5,14 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLite 
 {
-	public static final String driver = "org.sqlite.JDBC";
-	public static Connection con;
-	public static Driver d;
-	String url;
+	private static final String driver = "org.sqlite.JDBC";
+	private static Connection con;
+	private static Driver d;
+	private String url;
 	
 	public SQLite(String dir, String dbName)
 	{
@@ -28,24 +27,45 @@ public class SQLite
 	
 	public void closeCon()
 	{
-		try {
+		try 
+		{
 			con.close();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			System.out.println("Error while closing connection: " + e.toString());
 		}
 	}
 	
-	public Boolean Query(String sql) throws SQLException 
+	public Boolean Query(String sql)
 	{
-		Statement stmt = con.createStatement();
-		return stmt.execute(sql);
+		Statement stmt;
+		try 
+		{
+			stmt = con.createStatement();
+			return stmt.execute(sql);
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Error running statement: " + e.toString());
+			return false;
+		}
+		
 	}
 	
-	public ResultSet QueryRes(String sql) throws SQLException 
+	public ResultSet QueryRes(String sql)
 	{
-		Statement stmt = con.createStatement();
-		ResultSet temp = stmt.executeQuery(sql);
-		return temp;
+		try
+		{
+			Statement stmt = con.createStatement();
+			ResultSet temp = stmt.executeQuery(sql);
+			return temp;
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Error running statement: " + e.toString());
+			return null;
+		}
 	}
 	
 	private void loadDriver()
@@ -54,7 +74,9 @@ public class SQLite
 		{
 			d = (Driver)Class.forName(driver).newInstance();
 			DriverManager.registerDriver(d);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			System.out.println("Error loading database driver: " + e.toString());
 		}
 		
@@ -65,7 +87,9 @@ public class SQLite
 		try 
 		{
 			con = DriverManager.getConnection(url);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			System.out.println("Error creating connection: " + e.toString());
 		}
 	}

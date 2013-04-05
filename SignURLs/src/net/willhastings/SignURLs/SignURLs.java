@@ -25,41 +25,35 @@ public class SignURLs extends JavaPlugin
 	
 	public void onEnable()
 	{
+		/* -------------- VARIABLE INITIALIZATION -------------- */
 		plugin = this;
-		signlisener = new SignLisener(this, log);
-		ResultSet res;
 		
+		/* -------------- LISENERS -------------- */
+		signlisener = new SignLisener(this, log);
+		
+		/* -------------- PERMISSIONS -------------- */
 		if(getServer().getPluginManager().getPlugin("Vault") != null) setupPermissions();
 		
+		/* -------------- COMMANDS -------------- */
 		getCommand("signurls").setExecutor(new MainCommand());
 		
+		/* -------------- DATABASE -------------- */
+		log.info("[SignURLs] attempting to open SQLite database!");
 		db = new SQLite(this.getDataFolder().getPath(), "links");
-		
-		try {
-			 db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
-			 
-			 res = db.QueryRes("SELECT * FROM `database`");
-
-			 String lineText, URL;
-			 while(res.next())
-			 {
-				 lineText = res.getString("signurl");
-				 URL = res.getString("url");
-				 CustomFunction.addLink(lineText, URL);
-			 }
-		} catch (Exception e) {
-			System.out.println("Error creating or runnint statement: " + e.toString());
-		}
-		
+		log.info("[SignURLs] attempting to load links from SQLite database!");
+		loadlinkDB();
 		CustomFunction.addLink("Author Site", "http://www.willhastings.net", true);
 		
-		//Metrics-Lite
+		/* -------------- METRICS -------------- */		
 		try 
 		{
 		    MetricsLite metrics = new MetricsLite(this);
 		    metrics.start();
-		} catch (Exception e) {
-		    System.out.println("Failed to submit stats! Stats will not be sent :(");
+		} 
+		catch (Exception e) 
+		{
+		    log.info("[SignURLs] Failed to submit stats! Stats will not be sent :(");
+		    log.severe(e.toString());
 		}
 		
 		log.info("[SignURLs] Has been Loaded!");
@@ -77,64 +71,42 @@ public class SignURLs extends JavaPlugin
 
 	public static boolean addLink(String lineText, String uRL) 
 	{
-		try 
-		{
-			db.Query("INSERT INTO `database` (signurl, url) VALUES ('" + lineText + "', '" + uRL + "')");
-		} 
-		catch (Exception e) 
-		{
-			System.out.println("Error creating or runnint statement: " + e.toString());
-			return false;
-		}
-		return true;
+		return db.Query("INSERT INTO `database` (signurl, url) VALUES ('" + lineText + "', '" + uRL + "')");
+
 	}
 	
 	public static boolean updateLink(String lineText, String uRL)
 	{
-		try 
-		{
-			db.Query("UPDATE `database` SET url='" + uRL + "' WHERE signurl='" + lineText + "'");
-		} 
-		catch (Exception e) 
-		{
-			System.out.println("Error updating or runnint statement: " + e.toString());
-			return false;
-		}
-		return true;
+		return db.Query("UPDATE `database` SET url='" + uRL + "' WHERE signurl='" + lineText + "'");
 	}
 	
 	public static boolean removeLink(String lineText)
 	{
+		return db.Query("DELETE FROM `database` WHERE signurl='" + lineText + "'");
+	}
+
+	public static boolean loadlinkDB()
+	{
+		ResultSet res;
+		String lineText, URL;
+		int cnt = 0;
+		
+		db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");	 
+		res = db.QueryRes("SELECT * FROM `database`"); 
 		try 
 		{
-			db.Query("DELETE FROM `database` WHERE signurl='" + lineText + "'");
+			while(res.next())
+			{
+				lineText = res.getString("signurl");
+				URL = res.getString("url");
+				CustomFunction.addLink(lineText, URL);
+				cnt++;
+			}
+			log.info("[SignURLs] " + cnt + " links have been loaded!");
 		} 
 		catch (Exception e) 
 		{
-			System.out.println("Error deleting or runnint statement: " + e.toString());
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean loadlinkDB() 
-	{
-		ResultSet res;
-		try {
-			db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
-			 
-			 res = db.QueryRes("SELECT * FROM `database`");
-
-			 String lineText, URL;
-			 while(res.next())
-			 {
-				 lineText = res.getString("signurl");
-				 URL = res.getString("url");
-				 CustomFunction.addLink(lineText, URL);
-			 }
-		} catch (Exception e) {
-			System.out.println("Error creating or runnint statement: " + e.toString());
-			return false;
+			log.severe("Error executing ResultSet: " + e.toString());
 		}
 		return true;
 	}
@@ -145,8 +117,18 @@ public class SignURLs extends JavaPlugin
         if (permissionProvider != null) 
         {
             permission = permissionProvider.getProvider();
-            log.info(SignURLs.PREFIX + "Has found that you have Vault installed and has switched over to it to handle permissions!");
+            log.info("[SignURLs] Has found that you have Vault installed and has switched over to it to handle permissions!");
         }
         return (permission != null);
     }
+
+	public static boolean purgeDB() 
+	{
+		boolean a, b;
+		a = db.Query("DROP TABLE `database`");
+		b = db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
+		CustomFunction.addLink("Author Site", "http://www.willhastings.net", true);
+		if(a == b) return true;
+			else return false;
+	}
 }
