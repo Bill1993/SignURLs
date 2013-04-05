@@ -67,7 +67,7 @@ public class SignURLs extends JavaPlugin
 
 	public void onDisable()
 	{
-
+		db.closeCon();
 	}
 	
 	public static SignURLs getPlugin()
