@@ -17,10 +17,8 @@ public class SignURLs extends JavaPlugin
 	private static Logger log = Logger.getLogger("Minecraft");
 	
 	public static final String PREFIX = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "SignURLs" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE;
-	public static SignLisener signlisener = null;
-	
+	public SignLisener signlisener = null;
 	public static Permission permission = null;
-	
 	private static SQLite db;
 	
 	public void onEnable()
@@ -28,23 +26,23 @@ public class SignURLs extends JavaPlugin
 		/* -------------- VARIABLE INITIALIZATION -------------- */
 		plugin = this;
 		
-		/* -------------- LISENERS -------------- */
+		/* -------------------- LISENERS ----------------------- */
 		signlisener = new SignLisener(this, log);
 		
-		/* -------------- PERMISSIONS -------------- */
-		if(getServer().getPluginManager().getPlugin("Vault") != null) setupPermissions();
+		/* ------------------- PERMISSIONS --------------------- */
+		if(this.getServer().getPluginManager().getPlugin("Vault") != null) setupPermissions();
 		
-		/* -------------- COMMANDS -------------- */
+		/* -------------------- COMMANDS ----------------------- */
 		getCommand("signurls").setExecutor(new MainCommand());
 		
-		/* -------------- DATABASE -------------- */
-		log.info("[SignURLs] attempting to open SQLite database!");
+		/* -------------------- DATABASE ----------------------- */
+		log.info("[SignURLs] attempting to open SQLite database.");
 		db = new SQLite(this.getDataFolder().getPath(), "links");
-		log.info("[SignURLs] attempting to load links from SQLite database!");
+		log.info("[SignURLs] attempting to load links from SQLite database.");
 		loadlinkDB();
 		CustomFunction.addLink("Author Site", "http://www.willhastings.net", true);
 		
-		/* -------------- METRICS -------------- */		
+		/* --------------------- METRICS ----------------------- */		
 		try 
 		{
 		    MetricsLite metrics = new MetricsLite(this);
@@ -56,7 +54,7 @@ public class SignURLs extends JavaPlugin
 		    log.severe(e.toString());
 		}
 		
-		log.info("[SignURLs] Has been Loaded!");
+		log.info("[SignURLs] " + this.getDescription().getVersion() + " Has been Loaded!");
 	}
 
 	public void onDisable()
@@ -72,7 +70,6 @@ public class SignURLs extends JavaPlugin
 	public static boolean addLink(String lineText, String uRL) 
 	{
 		return db.Query("INSERT INTO `database` (signurl, url) VALUES ('" + lineText + "', '" + uRL + "')");
-
 	}
 	
 	public static boolean updateLink(String lineText, String uRL)
@@ -91,7 +88,7 @@ public class SignURLs extends JavaPlugin
 		String lineText, URL;
 		int cnt = 0;
 		
-		db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");	 
+		db.Query("CREATE TABLE IF NOT EXISTS `database` (signurl varchar(20), url varchar(164))");
 		res = db.QueryRes("SELECT * FROM `database`"); 
 		try 
 		{
@@ -102,7 +99,7 @@ public class SignURLs extends JavaPlugin
 				CustomFunction.addLink(lineText, URL);
 				cnt++;
 			}
-			log.info("[SignURLs] " + cnt + " links have been loaded!");
+			log.info("[SignURLs] " + cnt + " links have been loaded.");
 		} 
 		catch (Exception e) 
 		{
@@ -112,15 +109,15 @@ public class SignURLs extends JavaPlugin
 	}
 	
 	public static boolean setupPermissions()
-    {
-        RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+	{
+		RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
         if (permissionProvider != null) 
         {
-            permission = permissionProvider.getProvider();
-            log.info("[SignURLs] Has found that you have Vault installed and has switched over to it to handle permissions!");
+        	permission = permissionProvider.getProvider();
+            log.info("[SignURLs] Has found that you have [Vault] installed and will us it to handle permissions!");
         }
         return (permission != null);
-    }
+	}
 
 	public static boolean purgeDB() 
 	{

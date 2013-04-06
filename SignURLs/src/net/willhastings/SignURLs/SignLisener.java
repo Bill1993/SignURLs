@@ -33,17 +33,17 @@ public class SignLisener implements Listener
 		if(block.getState() instanceof Sign)
 		{
 			Sign sign = (Sign)block.getState();
-			int line = CustomFunction.isURLSign(sign);
-			if(CustomFunction.hasPermission(event.getPlayer(), "signurls.place") && line > -1) {}
-				else if (event.getPlayer().isOp()) {}
-					else
-					{
-						event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [SignURLs] signs!");
-						block.breakNaturally();
-					}
-			
+			int line = CustomFunction.findKey(event.getLines());
 			if(line == -1) return;
-			else if(line == 3)
+			
+			if(CustomFunction.hasPermission(event.getPlayer(), "signurls.place")) {}
+				else
+				{
+					event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [SignURLs] signs!");
+					block.breakNaturally();
+				}
+			
+			if(line == 3)
 			{
 				event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [SignURLs] on the buttom line!");
 				block.breakNaturally();

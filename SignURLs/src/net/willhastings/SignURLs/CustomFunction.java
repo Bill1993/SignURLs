@@ -14,8 +14,11 @@ public class CustomFunction
 	
 	public static int isURLSign(Sign sign) 
 	{
-		String line[] = sign.getLines();
-		
+		return findKey(sign.getLines());	
+	}
+	
+	public static int findKey(String[] line) 
+	{
 		for(int i = 0; i < line.length; i++)
 		{
 			if(line[i].equalsIgnoreCase("[SignURLs]"))
@@ -94,8 +97,9 @@ public class CustomFunction
 	
 	public static boolean hasPermission(Player player, String perm)
 	{
-		if(SignURLs.permission != null) return SignURLs.permission.has(player, perm);
-		else return player.hasPermission(perm);
+		if (player.isOp()) return true;
+			else if(SignURLs.permission != null) return SignURLs.permission.has(player, perm);
+				else return player.hasPermission(perm);
 	}
 
 	public static String[] getList(int pageNumber) 

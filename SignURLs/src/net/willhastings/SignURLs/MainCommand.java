@@ -16,10 +16,9 @@ public class MainCommand implements CommandExecutor {
 			return true;
 		}
 		 
-		if(CustomFunction.hasPermission((Player) sender, "signurls.command")) {}
-			else if (CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
-				else if (sender.isOp()) {}
-					else return false;
+		if(CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
+			else if (CustomFunction.hasPermission((Player) sender, "signurls.command.command")) {}
+				else return false;
 		
 		if(args.length < 1)
 		{
@@ -38,10 +37,9 @@ public class MainCommand implements CommandExecutor {
 			{
 				case ADD: 
 				{ 
-					if(CustomFunction.hasPermission((Player) sender, "signurls.command.add")) {}
-						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
-							else if (sender.isOp()) {}
-								else return false;
+					if(CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
+						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.add")) {}
+							else return false;
 					
 					if(args.length < 3)
 					{
@@ -72,9 +70,8 @@ public class MainCommand implements CommandExecutor {
 				}
 				case REMOVE:
 				{ 
-					if(CustomFunction.hasPermission((Player) sender, "signurls.command.remove")) {}
-						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
-							else if (sender.isOp()) {}
+					if(CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
+						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.remove")) {}
 								else return false;
 					
 					if(args.length < 2)
@@ -103,10 +100,9 @@ public class MainCommand implements CommandExecutor {
 				}
 				case CHANGE:
 				{
-					if(CustomFunction.hasPermission((Player) sender, "signurls.command.change")) {}
-						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
-							else if (sender.isOp()) {}
-								else return false;
+					if(CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
+						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.change")) {}
+							else return false;
 					
 					if(args.length < 3)
 					{
@@ -134,10 +130,9 @@ public class MainCommand implements CommandExecutor {
 				}
 				case LIST:
 				{
-					if(CustomFunction.hasPermission((Player) sender, "signurls.command.list")) {}
-						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
-							else if (sender.isOp()) {}
-								else return false;
+					if(CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
+						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.list")) {}
+							else return false;
 					
 					int pageNum, maxPages=CustomFunction.getMaxListPages();
 					if(args.length < 2)
@@ -172,10 +167,9 @@ public class MainCommand implements CommandExecutor {
 				}
 				case ADMIN:
 				{
-					if(CustomFunction.hasPermission((Player) sender, "signurls.command.admin")) {}
-						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
-							else if (sender.isOp()) {}
-								else return false;
+					if(CustomFunction.hasPermission((Player) sender, "signurls.command.*")) {}
+						else if (CustomFunction.hasPermission((Player) sender, "signurls.command.admin")) {}
+							else return false;
 					
 					if(args.length < 3)
 					{
