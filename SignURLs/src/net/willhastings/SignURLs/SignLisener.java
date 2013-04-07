@@ -32,7 +32,6 @@ public class SignLisener implements Listener
 		Block block = event.getBlock();
 		if(block.getState() instanceof Sign)
 		{
-			Sign sign = (Sign)block.getState();
 			int line = CustomFunction.findKey(event.getLines());
 			if(line == -1) return;
 			
@@ -51,7 +50,7 @@ public class SignLisener implements Listener
 			else
 			{
 				line++;
-				String lineText = sign.getLine(line);
+				String lineText = event.getLine(line);
 				if(!CustomFunction.linkExists(lineText))
 				{
 					event.getPlayer().sendMessage(SignURLs.PREFIX + "The link " + ChatColor.YELLOW 
