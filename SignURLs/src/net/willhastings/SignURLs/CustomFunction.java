@@ -77,6 +77,7 @@ public class CustomFunction
 	public static boolean removeLink(String lineText) 
 	{
 		link.remove(lineText);
+		list.remove(lineText);
 		return SignURLs.removeLink(lineText);
 	}
 
