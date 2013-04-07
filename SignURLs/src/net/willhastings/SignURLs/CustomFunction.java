@@ -98,9 +98,18 @@ public class CustomFunction
 	
 	public static boolean hasPermission(Player player, String perm)
 	{
-		if (player.isOp()) return true;
-			else if(SignURLs.permission != null) return SignURLs.permission.has(player, perm);
-				else return player.hasPermission(perm);
+		if (player.isOp()) return true;	
+		else if(SignURLs.permission != null) 
+		{
+			if (SignURLs.permission.has(player, "*")) return true;
+			else if (SignURLs.permission.has(player, perm)) return true;
+		}
+		else
+		{
+			if (player.hasPermission("*")) return true;
+			else if (player.hasPermission(perm)) return true;
+		}
+		return false;
 	}
 
 	public static String[] getList(int pageNumber) 
