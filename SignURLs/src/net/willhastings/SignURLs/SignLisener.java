@@ -40,12 +40,14 @@ public class SignLisener implements Listener
 				{
 					event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [SignURLs] signs!");
 					block.breakNaturally();
+					return;
 				}
 			
 			if(line == 3)
 			{
 				event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [SignURLs] on the buttom line!");
 				block.breakNaturally();
+				return;
 			}
 			else
 			{
