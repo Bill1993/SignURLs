@@ -42,11 +42,7 @@ public class CustomFunction
 		}
 		else if(!linkExists(lineText))
 		{
-<<<<<<< HEAD
-			if(URL.toLowerCase().contains("http://") || URL.toLowerCase().contains("https://"))
-=======
 			if(URL.toLowerCase().startsWith("http://") || URL.toLowerCase().startsWith("https://"))
->>>>>>> 44f3bfc46b0d347d7281a8128299647b23330802
 			{
 				link.put(lineText, URL);
 				if(newLink) SignURLs.addLink(lineText, URL);
