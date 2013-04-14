@@ -26,14 +26,17 @@ public class SignLisener implements Listener
 		log = logger;
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onSignChange(SignChangeEvent event)
 	{	
 		Block block = event.getBlock();
 		if(block.getState() instanceof Sign)
 		{
 			int line = CustomFunction.findKey(event.getLines());
+			
 			if(line == -1) return;
+			
+			if(event.getLine(line).equalsIgnoreCase("[SignURLs]")) event.setLine(line, "[§1SignURLs§0]");
 			
 			if(CustomFunction.hasPermission(event.getPlayer(), "signurls.place")) {}
 				else
@@ -89,7 +92,7 @@ public class SignLisener implements Listener
 					block.breakNaturally();
 				}
 				else
-				{
+				{		
 					line++;
 					String lineText = sign.getLine(line);
 					if(CustomFunction.linkExists(lineText))

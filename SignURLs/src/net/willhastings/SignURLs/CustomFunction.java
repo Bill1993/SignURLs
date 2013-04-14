@@ -12,16 +12,16 @@ public class CustomFunction
 	private static ArrayList<String> list = new ArrayList<String>();
 	public static final int PAGE_LINES = 9;
 	
-	public static int isURLSign(Sign sign) 
+	public static int isURLSign(Sign sign)
 	{
 		return findKey(sign.getLines());	
 	}
-	
-	public static int findKey(String[] line) 
+
+	public static int findKey(String[] line)
 	{
 		for(int i = 0; i < line.length; i++)
 		{
-			if(line[i].equalsIgnoreCase("[SignURLs]"))
+			if(line[i].equalsIgnoreCase("[SignURLs]") || line[i].equalsIgnoreCase("[§1SignURLs§0]"))
 			{
 				return i;
 			}
