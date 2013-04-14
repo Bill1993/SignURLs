@@ -42,25 +42,21 @@ public class CustomFunction
 		}
 		else if(!linkExists(lineText))
 		{
-			if(URL.toLowerCase().startsWith("http://") || URL.toLowerCase().startsWith("https://"))
-			{
-				link.put(lineText, URL);
-				if(newLink) SignURLs.addLink(lineText, URL);
-			}
-			else
-			{
-				link.put(lineText, "http://" + URL);
-				if(newLink) SignURLs.addLink(lineText, "http://" + URL);
-			}
+			String temp = fixURL(URL);
+			link.put(lineText, temp);
+			if(newLink) SignURLs.addLink(lineText, temp);
 			list.add(lineText);
-				
-			//if(newLink) System.out.println("|--------------------- NEW LINK --------------------|");
-			/*System.out.println("|---------------------------------------------------|");
-			System.out.println("[SignURLs] " + lineText + "|" + URL + " Has been added!");
-			System.out.println("|---------------------------------------------------|");*/
 			return true;
 		}
 		return false;
+	}
+	
+	public static String fixURL(String URL)
+	{
+		String temp;
+		if(URL.toLowerCase().startsWith("http://") || URL.toLowerCase().startsWith("https://")) temp = URL;
+		else temp = "http://" + URL;
+		return temp;
 	}
 
 	public static boolean linkExists(String lineText) 
@@ -83,17 +79,10 @@ public class CustomFunction
 
 	public static boolean changeLink(String lineText, String newURL) 
 	{
+		String temp = fixURL(newURL);
 		link.remove(lineText);
-		if(newURL.toLowerCase().startsWith("http://") || newURL.toLowerCase().startsWith("https://"))
-		{
-			link.put(lineText, newURL);
-			return SignURLs.updateLink(lineText, newURL);
-		}
-		else
-		{
-			link.put(lineText, "http://" + newURL);
-			return SignURLs.updateLink(lineText, "http://" + newURL);
-		}
+		link.put(lineText, temp);
+		return SignURLs.updateLink(lineText, temp);
 	}
 	
 	public static boolean hasPermission(Player player, String perm)
@@ -144,5 +133,4 @@ public class CustomFunction
 		list.clear();	
 		return SignURLs.purgeDB();
 	}
-
 }
