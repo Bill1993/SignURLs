@@ -84,7 +84,7 @@ public class CustomFunction
 	public static boolean changeLink(String lineText, String newURL) 
 	{
 		link.remove(lineText);
-		if(newURL.toLowerCase().contains("http://"))
+		if(newURL.toLowerCase().startsWith("http://") || newURL.toLowerCase().startsWith("https://"))
 		{
 			link.put(lineText, newURL);
 			return SignURLs.updateLink(lineText, newURL);
