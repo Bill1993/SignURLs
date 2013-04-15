@@ -21,6 +21,7 @@ public class Config
 		CHAT_PREFIX = ChatColor.translateAlternateColorCodes('&', config.getString("Chat.Prefix"));
 		SIGN_TEXT = config.getString("Sign.Text");
 		SIGN_TEXT_COLOR = ChatColor.translateAlternateColorCodes('&', config.getString("Sign.Color"));
+		
 		signURLs.saveConfig();
 	}
 

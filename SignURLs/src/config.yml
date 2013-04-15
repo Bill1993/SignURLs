@@ -1,19 +1,8 @@
-#|-----------------------------------------------------------|
-#|-------------------Plugin Chat Options---------------------|
-#|-----------------------------------------------------------|
-#
 # Prefix - Sets the prefix used when sending the link in the chat to the user.
-#
-Chat:
-  Prefix: '&8[&4SignURLs&8]'
-#
-#|-----------------------------------------------------------|
-#|-------------------Plugin Sign Options---------------------|
-#|-----------------------------------------------------------|
-#
 # Text - Sets the prefix used when sending the link in the chat to the user.
 # Color - Set the color of the 'Text' on the sign.
-#
+Chat:
+  Prefix: '&8[&4SignURLs&8]'
 Sign:
   Text: 'SignURLs'
   Color: '&1'

@@ -174,7 +174,7 @@ public class MainCommand implements CommandExecutor {
 					if(args.length < 3)
 					{
 						sender.sendMessage(SignURLs.PREFIX + ChatColor.RED + "Invalid sub command usuage!");
-						sender.sendMessage(SignURLs.PREFIX + "/signurls ADMIN DATABASE RELOAD\n" + ChatColor.YELLOW + " - Will reload SQLite DB!!!");
+						sender.sendMessage(SignURLs.PREFIX + "/signurls ADMIN DATABASE RELOAD\n" + ChatColor.YELLOW + " - Will reload SQLite DB.");
 						sender.sendMessage(SignURLs.PREFIX + "/signurls ADMIN DATABASE PURGE\n" + ChatColor.RED + " - Will delete everything from the SQLite DB!!!!");
 					}
 					else if(args[1].equalsIgnoreCase("DATABASE") && args[2].equalsIgnoreCase("RELOAD"))

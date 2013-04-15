@@ -1,6 +1,6 @@
 name: SignURLs
 main: net.willhastings.SignURLs.SignURLs
-version: 1.0.3
+version: 1.0.4
 author: bill1993
 softdepend: [Vault]
 
