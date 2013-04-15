@@ -3,6 +3,8 @@ package net.willhastings.SignURLs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.willhastings.SignURLs.util.Config;
+
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
@@ -21,7 +23,7 @@ public class CustomFunction
 	{
 		for(int i = 0; i < line.length; i++)
 		{
-			if(line[i].equalsIgnoreCase("[SignURLs]") || line[i].equalsIgnoreCase("[§1SignURLs§0]"))
+			if(line[i].equalsIgnoreCase("[" + Config.SIGN_TEXT + "]") || line[i].equalsIgnoreCase("["+ Config.SIGN_TEXT_COLOR + Config.SIGN_TEXT + "§0]"))
 			{
 				return i;
 			}

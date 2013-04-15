@@ -1,4 +1,4 @@
-package net.willhastings.SignURLs;
+package net.willhastings.SignURLs.util;
 
 import java.io.File;
 import java.sql.Connection;
@@ -6,6 +6,8 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import net.willhastings.SignURLs.SignURLs;
 
 public class SQLite 
 {

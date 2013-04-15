@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
+import net.willhastings.SignURLs.util.Config;
+import net.willhastings.SignURLs.util.SQLite;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +33,9 @@ public class SignURLs extends JavaPlugin
 		
 		/* ------------------- PERMISSIONS --------------------- */
 		if(this.getServer().getPluginManager().getPlugin("Vault") != null) setupPermissions();
+		
+		/* ------------------ CONFIGURATION -------------------- */		
+		Config.loadConfig(this);
 		
 		/* -------------------- COMMANDS ----------------------- */
 		getCommand("signurls").setExecutor(new MainCommand());

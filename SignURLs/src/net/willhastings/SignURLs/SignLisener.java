@@ -2,6 +2,8 @@ package net.willhastings.SignURLs;
 
 import java.util.logging.Logger;
 
+import net.willhastings.SignURLs.util.Config;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -26,7 +28,7 @@ public class SignLisener implements Listener
 		log = logger;
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onSignChange(SignChangeEvent event)
 	{	
 		Block block = event.getBlock();
@@ -36,7 +38,7 @@ public class SignLisener implements Listener
 			
 			if(line == -1) return;
 			
-			if(event.getLine(line).equalsIgnoreCase("[SignURLs]")) event.setLine(line, "[§1SignURLs§0]");
+			if(event.getLine(line).equalsIgnoreCase("["+ Config.SIGN_TEXT + "]")) event.setLine(line, "["+ Config.SIGN_TEXT_COLOR + Config.SIGN_TEXT + "§0]");
 			
 			if(CustomFunction.hasPermission(event.getPlayer(), "signurls.place")) {}
 				else
@@ -88,7 +90,7 @@ public class SignLisener implements Listener
 				if(line == -1) return;
 				else if(line == 3)
 				{
-					event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [SignURLs] on the buttom line!");
+					event.getPlayer().sendMessage(SignURLs.PREFIX + "You can not place [" + Config.SIGN_TEXT + "] on the buttom line!");
 					block.breakNaturally();
 				}
 				else
@@ -98,7 +100,7 @@ public class SignLisener implements Listener
 					if(CustomFunction.linkExists(lineText))
 					{
 						String URL = CustomFunction.fetchLink(lineText);
-						player.sendMessage(SignURLs.PREFIX + URL);
+						player.sendMessage(Config.CHAT_PREFIX + " " + ChatColor.WHITE + URL);
 					}
 					else
 					{
