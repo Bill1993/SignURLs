@@ -15,7 +15,8 @@ public class Config
 	public static void loadConfig(SignURLs signURLs) 
 	{
 		FileConfiguration config = signURLs.getConfig();
-		
+
+		signURLs.saveDefaultConfig();
 		config.options().copyDefaults(true);
 		signURLs.saveConfig();
 		

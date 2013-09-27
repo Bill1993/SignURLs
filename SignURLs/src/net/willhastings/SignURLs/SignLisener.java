@@ -34,9 +34,7 @@ public class SignLisener implements Listener
 	public void onBlockBreak(BlockBreakEvent event)
 	{
 		Block block = event.getBlock();
-		Material inhand = event.getPlayer().getItemInHand().getType();
-		
-		if(block.getState() instanceof Sign && inhand == Material.GOLDEN_CARROT)
+		if(block.getState() instanceof Sign)
 		{
 			Sign sign = (Sign) block.getState();
 			int line = CustomFunction.isURLSign(sign);
@@ -48,6 +46,8 @@ public class SignLisener implements Listener
 				
 				if(CustomFunction.hasPermission(player, "signurls.break"))
 				{
+					Material inhand = event.getPlayer().getItemInHand().getType();
+					
 					if(!(inhand == Material.GOLDEN_CARROT))
 					{
 						player.sendMessage(SignURLs.PREFIX + "You need to use a Golden Carrot to destroy [SignURLs] Signs.");

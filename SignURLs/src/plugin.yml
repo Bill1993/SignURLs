@@ -27,3 +27,5 @@ permissions:
     description: Allows a user to use SignURL signs.
   signurls.place:
     description: Allows a user to place a SignURLs Sign.
+  signurls.break:
+    description: Allows a user to break a SignURLs Sign if they are holding a golden carrot.
