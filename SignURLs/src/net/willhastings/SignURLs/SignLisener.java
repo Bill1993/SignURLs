@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import net.willhastings.SignURLs.util.Config;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
@@ -26,6 +28,35 @@ public class SignLisener implements Listener
 		signURLs.getServer().getPluginManager().registerEvents(this, signURLs);
 		plugin = signURLs;
 		log = logger;
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onBlockBreak(BlockBreakEvent event)
+	{
+		Block block = event.getBlock();
+		Material inhand = event.getPlayer().getItemInHand().getType();
+		
+		if(block.getState() instanceof Sign && inhand == Material.GOLDEN_CARROT)
+		{
+			Sign sign = (Sign) block.getState();
+			boolean isURLSign = CustomFunction.isURLSign(sign) > -1 ? true:false;
+			
+			if(!isURLSign) return;
+			else
+			{
+				Player player = event.getPlayer();
+				
+				if(CustomFunction.hasPermission(player, "signurls.break"))
+				{
+					if(!(inhand == Material.GOLDEN_CARROT))
+					{
+						player.sendMessage(SignURLs.PREFIX + "You need to use a Golden Carrot to destroy [SignURLs] Signs.");
+						event.setCancelled(true);
+					}
+				}
+				else event.setCancelled(true);
+			}
+		}
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
