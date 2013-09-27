@@ -131,6 +131,7 @@ public class SignLisener implements Listener
 							event.setCancelled(true);
 							return;
 						}
+						else CustomFunction.updatePlayerPrevTime(player, curr);
 					}
 				}
 				
