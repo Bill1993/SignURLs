@@ -1,8 +1,11 @@
 # Prefix - Sets the prefix used when sending the link in the chat to the user.
 # Text - Sets the prefix used when sending the link in the chat to the user.
 # Color - Set the color of the 'Text' on the sign.
+# Cool-down is the amount of time a player has to wait before clicking a sign again. If 0 it will disable the feature.
 Chat:
   Prefix: '&8[&4SignURLs&8]'
 Sign:
   Text: 'SignURLs'
   Color: '&1'
+Player:
+  Cool-down: 0

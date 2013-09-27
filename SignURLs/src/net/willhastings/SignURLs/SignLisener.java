@@ -115,6 +115,25 @@ public class SignLisener implements Listener
 			Block block = event.getClickedBlock();
 			if(block.getState() instanceof Sign)
 			{
+				if(Config.PLAYER_COOLDOWN > 0)
+				{
+					Long curr = System.currentTimeMillis();
+					Long currPlayer = CustomFunction.getPlayerPrevTime(player);
+					if(currPlayer > -1)
+					{
+						Long diff = (curr - currPlayer);
+						if(diff < Config.PLAYER_COOLDOWN)
+						{
+							Long toWait = (Config.PLAYER_COOLDOWN - diff);
+							player.sendMessage(Config.CHAT_PREFIX + ChatColor.WHITE 
+									+ " You need to wait " + ChatColor.GOLD + toWait 
+									+ "ms" + ChatColor.WHITE + " before requesting another link!");
+							event.setCancelled(true);
+							return;
+						}
+					}
+				}
+				
 				Sign sign = (Sign)block.getState();	
 				int line = CustomFunction.isURLSign(sign);
 

@@ -11,8 +11,24 @@ import org.bukkit.entity.Player;
 public class CustomFunction 
 {
 	private static HashMap<String, String> link = new HashMap<String, String>();
+	private static HashMap<Player, Long> cooldown = new HashMap<Player, Long>();
 	private static ArrayList<String> list = new ArrayList<String>();
 	public static final int PAGE_LINES = 9;
+	
+	public static Long getPlayerPrevTime(Player player)
+	{
+		if(cooldown.containsKey(player)) return cooldown.get(player);
+		else
+		{
+			cooldown.put(player, System.currentTimeMillis());
+			return (long) -1;
+		}
+	}
+	
+	public static void updatePlayerPrevTime(Player player, Long time)
+	{
+		cooldown.put(player, time);
+	}
 	
 	public static int isURLSign(Sign sign)
 	{
