@@ -39,9 +39,9 @@ public class SignLisener implements Listener
 		if(block.getState() instanceof Sign && inhand == Material.GOLDEN_CARROT)
 		{
 			Sign sign = (Sign) block.getState();
-			boolean isURLSign = CustomFunction.isURLSign(sign) > -1 ? true:false;
+			int line = CustomFunction.isURLSign(sign);
 			
-			if(!isURLSign) return;
+			if(line == -1) return;
 			else
 			{
 				Player player = event.getPlayer();
