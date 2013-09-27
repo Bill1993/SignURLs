@@ -69,7 +69,7 @@ public class SignLisener implements Listener
 			
 			if(line == -1) return;
 			
-			if(event.getLine(line).equalsIgnoreCase("["+ Config.SIGN_TEXT + "]")) event.setLine(line, "["+ Config.SIGN_TEXT_COLOR + Config.SIGN_TEXT + "§0]");
+			if(event.getLine(line).equalsIgnoreCase("["+ Config.SIGN_TEXT + "]")) event.setLine(line, "["+ Config.SIGN_TEXT_COLOR + Config.SIGN_TEXT + ChatColor.BLACK + "]");
 			
 			if(CustomFunction.hasPermission(event.getPlayer(), "signurls.place")) {}
 				else
