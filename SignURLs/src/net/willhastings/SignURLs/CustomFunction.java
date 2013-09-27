@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import net.willhastings.SignURLs.util.Config;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
@@ -39,7 +40,7 @@ public class CustomFunction
 	{
 		for(int i = 0; i < line.length; i++)
 		{
-			if(line[i].equalsIgnoreCase("[" + Config.SIGN_TEXT + "]") || line[i].equalsIgnoreCase("["+ Config.SIGN_TEXT_COLOR + Config.SIGN_TEXT + "§0]"))
+			if(line[i].equalsIgnoreCase("[" + Config.SIGN_TEXT + "]") || line[i].equalsIgnoreCase("["+ Config.SIGN_TEXT_COLOR + Config.SIGN_TEXT + ChatColor.BLACK + "]"))
 			{
 				return i;
 			}
