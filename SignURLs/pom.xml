@@ -48,7 +48,7 @@
 				<directory>src</directory>
 				<includes>
 					<include>plugin.yml</include>
-					<incudee>config.yml</incudee>
+					<include>config.yml</incudee>
 				</includes>
 				<filtering>true</filtering>
 			</resource>
