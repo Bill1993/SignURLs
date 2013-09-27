@@ -1,6 +1,6 @@
-name: SignURLs
+name: ${name}
 main: net.willhastings.SignURLs.SignURLs
-version: 1.0.4
+version: ${version}
 author: bill1993
 softdepend: [Vault]
 
