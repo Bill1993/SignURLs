@@ -89,10 +89,6 @@ public class SignURLs extends JavaPlugin
 				lineText = res.getString("signurl");
 				URL = res.getString("url");
 				CustomFunction.addLink(lineText, URL);
-				if(URL.toUpperCase().contains("ICONOMYCRAFT"));
-				{
-					CustomFunction.changeLink(lineText, URL.replaceAll("iconomycraft", "CraftedMiners"));
-				}
 				cnt++;
 			}
 			log.info("[SignURLs] " + cnt + " links have been loaded.");
