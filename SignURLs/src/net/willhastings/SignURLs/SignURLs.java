@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.MetricsLite;
 
 public class SignURLs extends JavaPlugin
 {
@@ -46,18 +45,6 @@ public class SignURLs extends JavaPlugin
 		log.info("[SignURLs] attempting to load links from SQLite database.");
 		loadlinkDB();
 		CustomFunction.addLink("Author Site", "http://www.willhastings.net", true);
-		
-		/* --------------------- METRICS ----------------------- */		
-		try 
-		{
-		    MetricsLite metrics = new MetricsLite(this);
-		    metrics.start();
-		} 
-		catch (Exception e) 
-		{
-		    log.info("[SignURLs] Failed to submit stats! Stats will not be sent :(");
-		    log.severe(e.toString());
-		}
 		
 		log.info("[SignURLs] " + this.getDescription().getVersion() + " Has been Loaded!");
 	}
@@ -102,6 +89,10 @@ public class SignURLs extends JavaPlugin
 				lineText = res.getString("signurl");
 				URL = res.getString("url");
 				CustomFunction.addLink(lineText, URL);
+				if(URL.toUpperCase().contains("ICONOMYCRAFT"));
+				{
+					CustomFunction.changeLink(lineText, URL.replaceAll("iconomycraft", "CraftedMiners"));
+				}
 				cnt++;
 			}
 			log.info("[SignURLs] " + cnt + " links have been loaded.");
